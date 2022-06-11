@@ -298,26 +298,8 @@ contract Superstate is UniswapV2ERC20, IUniswapV2Pair {
     }
 
     constructor(
-        address _token0,
-        address _token1,
-        address s0,
-        address s1,
-        address _controller //,
     ) UniswapV2ERC20() {
-        factory = msg.sender;
-        controller = _controller;
-        token0 = _token0;
-        token1 = _token1;
-        token0s = IERC4626(s0);
-        token1s = IERC4626(s1);
-        IERC20(token0).approve(
-            s0,
-            9999999999999999999999999999999999999999999999
-        );
-        IERC20(token1).approve(
-            s1,
-            9999999999999999999999999999999999999999999999
-        );
+        controller = msg.sender;
     }
 
     // called once by the factory at time of deployment
@@ -330,7 +312,7 @@ contract Superstate is UniswapV2ERC20, IUniswapV2Pair {
         string memory _symbol,
         address _controller
     ) external {
-        require(token0!=address(0),'Superstate - Already inited'); // initialized
+        require(token0==address(0),'Superstate - Already inited'); // initialized
         token0 = _token0;
         token1 = _token1;
         token0s = IERC4626(s0);
